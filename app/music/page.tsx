@@ -1,27 +1,46 @@
+"use client"
+
+import { useState } from "react";
 import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "@/components/ReviewForm";
 
+type Review = {
+  album: string;
+  artist: string;
+  date: string;
+  rating: number;
+  review: string;
+  coverUrl: string;
+};
+
 export default function Music() {
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  function addReview(newReview: Review) {
+    setReviews([newReview, ...reviews]);
+  }
+
   return (
     <main>
       <h1>Music Reviews</h1>
-      <ReviewForm />
-      <ReviewCard
-        album="The New Abnormal"
-        artist="The Strokes"
-        date="7 Jun 2026"
-        rating={4}
-        review="Really enjoyed this one."
-        coverUrl="https://placehold.co/300"
-      />
-      <ReviewCard
-        album="Laurel Hell"
-        artist="Mitski"
-        date="7 Jun 2026"
-        rating={5}
-        review="My fav"
-        coverUrl="https://placehold.co/300"
-      />
+
+      <ReviewForm onAddReview={addReview} />
+      
+      {reviews.length === 0 ? (
+        <p>No reviews yet. Add one above!</p>
+      ) : (
+        reviews.map((r, index) => (
+          <ReviewCard
+            key={index}
+            album={r.album}
+            artist={r.artist}
+            date={r.date}
+            rating={r.rating}
+            review={r.review}
+            coverUrl={r.coverUrl}
+          />
+        ))
+      )}
     </main>
   );
 }
