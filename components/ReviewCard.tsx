@@ -6,11 +6,12 @@ type ReviewCardProps = {
   rating: number;
   review: string;
   coverUrl: string;
-  onDelete: (id: number) => void;
+  onDelete?: (id: number) => void;
 };
 
 export default function ReviewCard({ id, album, artist, date, rating, review, coverUrl, onDelete }: ReviewCardProps) {
   function handleDelete() {
+    if (!onDelete) return;
     const confirmed = confirm(`Delete your review of "${album}"?`);
     if (confirmed) {
       onDelete(id);
@@ -26,7 +27,9 @@ export default function ReviewCard({ id, album, artist, date, rating, review, co
         <p>Listened on: {date}</p>
         <p>Rating: {rating}</p>
         <p>{review}</p>
-        <button type="button" onClick={handleDelete}>Delete</button>
+        {onDelete && (
+          <button type="button" onClick={handleDelete}>Delete</button>
+        )}
       </div>
     </article>
   );

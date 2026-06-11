@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "@/components/ReviewForm";
+import { useAuth } from "@/components/AuthProvider";
 
 type Review = {
   id: number;
@@ -19,6 +20,7 @@ type NewReview = Omit<Review, "id">;
 export default function Music() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { user, isAuthLoading } = useAuth();
 
   useEffect(() => {
     async function loadReviews() {
@@ -101,8 +103,7 @@ export default function Music() {
   return (
     <main>
       <h1>Music Reviews</h1>
-      <ReviewForm onAddReview={addReview} />
-
+      {!isAuthLoading && user && <ReviewForm onAddReview={addReview} />}
       {isLoading ? (
         <p>Loading reviews...</p>
       ) : reviews.length === 0 ? (
@@ -118,7 +119,7 @@ export default function Music() {
             rating={r.rating}
             review={r.review}
             coverUrl={r.coverUrl}
-            onDelete={deleteReview}
+            onDelete={user ? deleteReview : undefined}
           />
         ))
       )}
