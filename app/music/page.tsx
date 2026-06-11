@@ -20,7 +20,6 @@ export default function Music() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load reviews from Supabase when the page mounts
   useEffect(() => {
     async function loadReviews() {
       const { data, error } = await supabase
@@ -34,7 +33,6 @@ export default function Music() {
         return;
       }
 
-      // Map DB columns (snake_case) to our component shape (camelCase)
       const mapped: Review[] = data.map((row) => ({
         id: row.id,
         album: row.album,
@@ -52,7 +50,6 @@ export default function Music() {
     loadReviews();
   }, []);
 
-  // Insert a new review into Supabase, then update local state
   async function addReview(newReview: NewReview) {
     const { data, error } = await supabase
       .from("reviews")
@@ -73,7 +70,6 @@ export default function Music() {
       return;
     }
 
-    // Add the newly-inserted row (with its real DB id) to local state
     const inserted: Review = {
       id: data.id,
       album: data.album,
@@ -85,6 +81,21 @@ export default function Music() {
     };
 
     setReviews([inserted, ...reviews]);
+  }
+
+  async function deleteReview(id: number) {
+    const { error } = await supabase
+      .from("reviews")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Failed to delete:", error);
+      alert("Could not delete review.");
+      return;
+    }
+
+    setReviews(reviews.filter((r) => r.id !== id));
   }
 
   return (
@@ -100,12 +111,14 @@ export default function Music() {
         reviews.map((r, index) => (
           <ReviewCard
             key={index}
+            id={r.id}
             album={r.album}
             artist={r.artist}
             date={r.date}
             rating={r.rating}
             review={r.review}
             coverUrl={r.coverUrl}
+            onDelete={deleteReview}
           />
         ))
       )}
