@@ -52,31 +52,28 @@ export default function ReviewForm({ onAddReview }: ReviewFormProps) {
   }
 
   return (
-    <form className="flex flex-col justify-self-start" onSubmit={handleSubmit}>
+    <form className="flex flex-col justify-center w-[50%] p-5 border-2" onSubmit={handleSubmit}>
       <h2>Add a Review</h2>
 
-      <section className="flex">
+      <section className="flex gap-5">
         {selectedAlbum ? (
           <div>
             <img src={selectedAlbum.artworkUrl100} alt="" width={60} height={60} />
             <p>{selectedAlbum.collectionName} — {selectedAlbum.artistName}</p>
-            <button type="button" onClick={() => setSelectedAlbum(null)}>
+            <Button type="button" onClick={() => setSelectedAlbum(null)} variant="secondary">
               Change album
-            </button>
+            </Button>
           </div>
         ) : (
           <AlbumSearch onSelect={setSelectedAlbum} />
         )}
 
-        <section className="flex flex-col">
-          <label>
-            Date listened:
-            <input
+        <section className="flex flex-col w-[40%]">
+          <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
-          </label>
           <label>
             Rating (1-5):
             <input

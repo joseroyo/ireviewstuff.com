@@ -19,13 +19,11 @@ export default function AlbumSearch({ onSelect }: AlbumSearchProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // If the query is empty, clear results and bail out
     if (query.trim() === "") {
       setResults([]);
       return;
     }
 
-    // Debounce: wait 400ms after the user stops typing before fetching
     const timeoutId = setTimeout(async () => {
       setIsLoading(true);
       try {
@@ -42,17 +40,17 @@ export default function AlbumSearch({ onSelect }: AlbumSearchProps) {
       }
     }, 400);
 
-    // Cleanup: if the user types again before 400ms, cancel the pending fetch
     return () => clearTimeout(timeoutId);
   }, [query]);
 
   return (
-    <div>
+    <div className="w-[60%]">
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for an album..."
+        className="border-1 w-[100%]"
       />
 
       {isLoading && <p>Searching...</p>}

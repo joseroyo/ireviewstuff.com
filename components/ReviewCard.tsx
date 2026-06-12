@@ -21,7 +21,7 @@ export default function ReviewCard({ id, album, artist, date, rating, review, co
   }
 
   return (
-    <article className="border-2 flex">
+    <article className="border-2 flex mb-4">
       <img src={coverUrl} alt={`${album} cover`} width={200} height={200} />
       <div>
         <h3>{album}</h3>
