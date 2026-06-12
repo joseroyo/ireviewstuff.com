@@ -15,7 +15,7 @@ export default function Navigation() {
   }
 
   return (
-    <nav>
+    <nav className="px-5 py-2 mb-5 border-b-2 flex justify-between">
       <Link href="/">Home</Link>
       <Link href="/music">Music</Link>
       

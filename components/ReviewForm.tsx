@@ -51,52 +51,51 @@ export default function ReviewForm({ onAddReview }: ReviewFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="flex flex-col justify-self-start" onSubmit={handleSubmit}>
       <h2>Add a Review</h2>
 
-      {selectedAlbum ? (
-        <div>
-          <img src={selectedAlbum.artworkUrl100} alt="" width={60} height={60} />
-          <p>{selectedAlbum.collectionName} — {selectedAlbum.artistName}</p>
-          <button type="button" onClick={() => setSelectedAlbum(null)}>
-            Change album
-          </button>
-        </div>
-      ) : (
-        <AlbumSearch onSelect={setSelectedAlbum} />
-      )}
+      <section className="flex">
+        {selectedAlbum ? (
+          <div>
+            <img src={selectedAlbum.artworkUrl100} alt="" width={60} height={60} />
+            <p>{selectedAlbum.collectionName} — {selectedAlbum.artistName}</p>
+            <button type="button" onClick={() => setSelectedAlbum(null)}>
+              Change album
+            </button>
+          </div>
+        ) : (
+          <AlbumSearch onSelect={setSelectedAlbum} />
+        )}
 
-      <label>
-        Date listened:
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-      </label>
-
-      <label>
-        Rating (1-5):
-        <input
-          type="number"
-          min="1"
-          max="5"
-          value={rating}
-          onChange={(e) => setRating(Number(e.target.value))}
-        />
-      </label>
-
-      <label>
-        Review:
-        <textarea
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-          placeholder="Write your review..."
-          rows={4}
-        />
-      </label>
-
-      <button type="submit">Save Review</button>
+        <section className="flex flex-col">
+          <label>
+            Date listened:
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </label>
+          <label>
+            Rating (1-5):
+            <input
+              type="number"
+              min="1"
+              max="5"
+              value={rating}
+              onChange={(e) => setRating(Number(e.target.value))}
+            />
+          </label>
+          <textarea
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              placeholder="Write your review..."
+              rows={4}
+              className="border-1"
+            />
+          <button type="submit">Save Review</button>
+        </section>
+      </section>
     </form>
   );
 }

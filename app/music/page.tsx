@@ -101,28 +101,30 @@ export default function Music() {
   }
 
   return (
-    <main>
-      <h1>Music Reviews</h1>
+    <main className="px-5 container mx-auto flex flex-col items-center">
+      <h1 className="text-center mb-3">Music Reviews</h1>
       {!isAuthLoading && user && <ReviewForm onAddReview={addReview} />}
-      {isLoading ? (
-        <p>Loading reviews...</p>
-      ) : reviews.length === 0 ? (
-        <p>No reviews yet. Add one above!</p>
-      ) : (
-        reviews.map((r, index) => (
-          <ReviewCard
-            key={index}
-            id={r.id}
-            album={r.album}
-            artist={r.artist}
-            date={r.date}
-            rating={r.rating}
-            review={r.review}
-            coverUrl={r.coverUrl}
-            onDelete={user ? deleteReview : undefined}
-          />
-        ))
-      )}
+      <section className="flex flex-col container">
+        {isLoading ? (
+          <p>Loading reviews...</p>
+        ) : reviews.length === 0 ? (
+          <p>No reviews yet. Add one above!</p>
+        ) : (
+          reviews.map((r, index) => (
+            <ReviewCard
+              key={index}
+              id={r.id}
+              album={r.album}
+              artist={r.artist}
+              date={r.date}
+              rating={r.rating}
+              review={r.review}
+              coverUrl={r.coverUrl}
+              onDelete={user ? deleteReview : undefined}
+            />
+          ))
+        )}
+      </section>
     </main>
   );
 }
