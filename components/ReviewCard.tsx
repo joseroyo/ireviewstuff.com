@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 type ReviewCardProps = {
   id: number,
   album: string;
@@ -28,7 +30,7 @@ export default function ReviewCard({ id, album, artist, date, rating, review, co
         <p>Rating: {rating}</p>
         <p>{review}</p>
         {onDelete && (
-          <button type="button" onClick={handleDelete}>Delete</button>
+          <Button type="button" variant="secondary" onClick={handleDelete}>Delete</Button>
         )}
       </div>
     </article>

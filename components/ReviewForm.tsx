@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import AlbumSearch from "./AlbumSearch";
+import Button from "./Button";
 
 
 type Album = {
@@ -93,7 +94,7 @@ export default function ReviewForm({ onAddReview }: ReviewFormProps) {
               rows={4}
               className="border-1"
             />
-          <button type="submit">Save Review</button>
+          <Button type="submit">Save Review</Button>
         </section>
       </section>
     </form>
