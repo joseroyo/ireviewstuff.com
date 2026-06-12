@@ -104,7 +104,7 @@ export default function Music() {
     <main className="px-5 container mx-auto flex flex-col items-center">
       <h1 className="text-center mb-3">Music Reviews</h1>
       {!isAuthLoading && user && <ReviewForm onAddReview={addReview} />}
-      <section className="flex flex-col container">
+      <section className="flex flex-col container my-7">
         {isLoading ? (
           <p>Loading reviews...</p>
         ) : reviews.length === 0 ? (
