@@ -50,7 +50,7 @@ export default function AlbumSearch({ onSelect }: AlbumSearchProps) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for an album..."
-        className="border-1 w-[100%]"
+        className="border-2 w-[100%] pl-2 bg-lowlight focus:outline-0"
       />
 
       {isLoading && <p>Searching...</p>}
@@ -58,10 +58,10 @@ export default function AlbumSearch({ onSelect }: AlbumSearchProps) {
       {results.length > 0 && (
         <ul>
           {results.map((album) => (
-            <li key={album.collectionId}>
+            <li key={album.collectionId} className="min-w-0 bg-lowlight">
               <button
                 type="button"
-                className="flex items-center cursor-pointer border-1 border-b-0 w-[100%] gap-2 first:border-t-0 last:border-b-1"
+                className="flex items-center cursor-pointer border-1 border-b-0 w-[100%] gap-2 first:border-t-0 last:border-b-1 hover:font-bold"
                 onClick={() => {
                   onSelect(album);
                   setQuery("");
@@ -69,9 +69,9 @@ export default function AlbumSearch({ onSelect }: AlbumSearchProps) {
                 }}
               >
                 <img src={album.artworkUrl100} alt="" width={45} height={45} />
-                <span className="flex flex-col items-start">
-                  <span>{album.collectionName}</span>
-                  <span>{album.artistName}</span>
+                <span className="flex flex-col items-start min-w-0">
+                  <span className="truncate text-left w-full text-[14px]">{album.collectionName}</span>
+                  <span className="truncate text-left w-full text-[14px]">{album.artistName}</span>
                 </span>
               </button>
             </li>

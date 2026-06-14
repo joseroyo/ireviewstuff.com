@@ -12,7 +12,7 @@ export default function StarRating({ value, onChange }: StarRatingProps) {
 
   return (
     <div
-      className="flex gap-1 my-2"
+      className="flex gap-1 mb-2"
       onMouseLeave={() => setHovered(0)}
     >
       {[1, 2, 3, 4, 5].map((starNumber) => {
@@ -26,8 +26,8 @@ export default function StarRating({ value, onChange }: StarRatingProps) {
             type="button"
             onClick={() => onChange(starNumber === value ? 0 : starNumber)}
             onMouseEnter={() => setHovered(starNumber)}
-            className={`text-3xl cursor-pointer transition-colors ${
-              isLit ? "text-blue" : "text-gray-300"
+            className={`text-[40px] leading-none cursor-pointer transition-colors ${
+              isLit ? "text-primary" : "text-lowlight"
             }`}
             aria-label={`Rate ${starNumber} out of 5`}
           >

@@ -53,9 +53,7 @@ export default function ReviewForm({ onAddReview }: ReviewFormProps) {
   }
 
   return (
-    <form className="flex flex-col justify-center w-[50%] p-5 border-2 bg-white" onSubmit={handleSubmit}>
-      <h2 className="mb-4">Add a Review</h2>
-
+    <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
       <section className="flex gap-5">
         {selectedAlbum ? (
           <div>
@@ -73,6 +71,7 @@ export default function ReviewForm({ onAddReview }: ReviewFormProps) {
           <input
               type="date"
               value={date}
+              className="focus:outline-0"
               onChange={(e) => setDate(e.target.value)}
             />
           <div>
@@ -83,7 +82,7 @@ export default function ReviewForm({ onAddReview }: ReviewFormProps) {
               onChange={(e) => setReview(e.target.value)}
               placeholder="Write your review..."
               rows={4}
-              className="border-1"
+              className="border-2 px-2 bg-lowlight focus:outline-0"
             />
           <Button type="submit" className="mt-3">Save Review</Button>
         </section>

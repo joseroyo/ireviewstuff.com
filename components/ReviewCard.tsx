@@ -35,7 +35,7 @@ export default function ReviewCard({ id, album, artist, date, rating, review, co
         <p>{review}</p>
       </div>
       {onDelete && (
-        <Button type="button" variant="secondary" className="absolute right-0 border-0" onClick={handleDelete}>x</Button>
+        <button type="button"className="absolute right-0 border-0 px-4 py-2 cursor-pointer" onClick={handleDelete}>x</button>
       )}
     </article>
   );

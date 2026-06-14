@@ -3,13 +3,25 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --pink-strong: #ff66c7;
+  --pink-light: #ffd1e9;
+  --pink-extra-light: #ffe8f4;
 }
 
 @theme inline {
+  --color-primary: var(--pink-strong);
+  --color-secondary: var(--pink-light);
+  --color-lowlight: var(--pink-extra-light);
+
+  --color-window-bg: var(--color-secondary);
+  --color-window-border-color: var(--color-primary);
+  --color-window-dotted-bg: radial-gradient(circle, var(--color-primary) 1px, transparent 1px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-undefined: var(--font-undefined);
+
+  --shadow-inner-soft: inset 0 0 8px rgba(0,0,0,0.2);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +32,13 @@
 }
 
 body {
-  background-image: url("/windows-xp-bliss.jpg");
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image: url("/images/windows-xp-bliss.jpg");
+  color: var(--pink-strong);
+  font-family: var(--font-undefined), monospace;
+}
+
+.bg-window-dotted {
+  background-image: radial-gradient(circle, var(--pink-strong) 1px, transparent 1.5px);
+  background-size: 4px 4px;
+  background-color: var(--pink-light);
 }

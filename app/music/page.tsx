@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "@/components/ReviewForm";
 import { useAuth } from "@/components/AuthProvider";
+import Window from "@/components/Window";
 
 type Review = {
   id: number;
@@ -103,7 +104,11 @@ export default function Music() {
   return (
     <main className="px-5 container mx-auto flex flex-col items-center">
       <h1 className="text-center mb-3">Music Reviews</h1>
-      {!isAuthLoading && user && <ReviewForm onAddReview={addReview} />}
+      {!isAuthLoading && user && (
+        <Window title="Add a Review" className="w-[50%]">
+          <ReviewForm onAddReview={addReview} />
+        </Window>
+      )}
       <section className="flex flex-col container my-7">
         {isLoading ? (
           <p>Loading reviews...</p>

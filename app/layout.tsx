@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import { AuthProvider } from "@/components/AuthProvider";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import localFont from "next/font/local";
 
 export const metadata: Metadata = {
   title: "Pau Landing",
   description: "Pau Landing",
 };
+
+const undefinedFont = localFont({
+  src: "../public/fonts/undefined-medium.woff2",
+  variable: "--font-undefined",
+  weight: "500",
+});
 
 export default function RootLayout({
   children,
@@ -27,7 +23,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${undefinedFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>

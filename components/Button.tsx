@@ -15,7 +15,7 @@ export default function Button({
 }: ButtonProps) {
   const base = "px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer";
   const variants = {
-    primary: "bg-black text-white hover:bg-gray-700",
+    primary: "bg-primary text-secondary hover:bg-gray-700",
     secondary: "bg-white border-1 text-black hover:bg-gray-100",
   };
 
