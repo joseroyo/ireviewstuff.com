@@ -1,4 +1,3 @@
-import Button from "./Button";
 import { getItunesArtwork } from "@/lib/itunes";
 
 type ReviewCardProps = {

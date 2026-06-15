@@ -50,7 +50,7 @@ export default function AlbumSearch({ onSelect }: AlbumSearchProps) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for an album..."
-        className="border-2 w-[100%] pl-2 bg-lowlight focus:outline-0"
+        className="w-[100%]"
       />
 
       {isLoading && <p>Searching...</p>}

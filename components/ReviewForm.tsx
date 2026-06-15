@@ -82,7 +82,7 @@ export default function ReviewForm({ onAddReview }: ReviewFormProps) {
               onChange={(e) => setReview(e.target.value)}
               placeholder="Write your review..."
               rows={4}
-              className="border-2 px-2 bg-lowlight focus:outline-0"
+              className="pr-2"
             />
           <Button type="submit" className="mt-3">Save Review</Button>
         </section>

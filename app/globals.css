@@ -4,6 +4,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --pink-strong: #ff66c7;
+  --pink-strong-hover: #ff8cd5;
   --pink-light: #ffd1e9;
   --pink-extra-light: #ffe8f4;
 }
@@ -16,6 +17,7 @@
   --color-window-bg: var(--color-secondary);
   --color-window-border-color: var(--color-primary);
   --color-window-dotted-bg: radial-gradient(circle, var(--color-primary) 1px, transparent 1px);
+  --color-btn-primary-hover: var(--pink-strong-hover);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -53,4 +55,15 @@ h1 {
 h2 {
   font-size: 32px;
   font-weight: bold;
+}
+
+input:not([type='date']),
+textarea {
+  background-color: var(--pink-extra-light);
+  border: 2px solid var(--pink-strong);
+  padding: 0 0 0 8px;
+
+  &:focus {
+    outline: none;
+  }
 }

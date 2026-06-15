@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import Button from "@/components/Button";
+import Window from "@/components/Window";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -34,36 +36,36 @@ export default function Login() {
   }
 
   return (
-    <main>
+    <main className="flex flex-col items-center">
       <h1>Log In</h1>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
+      <Window className="w-[33%]">
+        <form onSubmit={handleSubmit}>
+          <label className="flex flex-col">
+            Email:
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          <label className="flex flex-col mt-3">
+            Password:
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          <Button type="submit" disabled={isSubmitting} className="mt-5">
+            {isSubmitting ? "Logging in..." : "Log in"}
+          </Button>
+        </form>
+      </Window>
 
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Logging in..." : "Log in"}
-        </button>
-      </form>
     </main>
   );
 }
