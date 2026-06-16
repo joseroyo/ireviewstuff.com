@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import ReviewCard from "@/components/ReviewCard";
-import ReviewForm from "@/components/ReviewForm";
+import ReviewForm, { ReviewSubmission } from "@/components/ReviewForm";
 import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
+import { searchItunes } from "@/lib/media/searchItunes";
 
 type Review = {
   id: number;
@@ -16,7 +17,6 @@ type Review = {
   review: string;
   coverUrl: string;
 };
-type NewReview = Omit<Review, "id">;
 
 export default function Music() {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -53,38 +53,37 @@ export default function Music() {
     loadReviews();
   }, []);
 
-  async function addReview(newReview: NewReview) {
-    const { data, error } = await supabase
+  async function addReview(data: ReviewSubmission) {
+    const { data: inserted, error } = await supabase
       .from("reviews")
       .insert({
-        title: newReview.album,
-        artist: newReview.artist,
-        image_url: newReview.coverUrl,
-        date_logged: newReview.date,
-        rating: newReview.rating,
-        review_text: newReview.review,
-        media_type: 'music',
+        title: data.item.title,
+        artist: data.item.artist,      
+        image_url: data.item.imageUrl,
+        date_logged: data.date,
+        rating: data.rating,
+        review_text: data.review,
+        media_type: "music",
       })
       .select()
       .single();
 
     if (error) {
       console.error("Failed to save review:", error);
-      alert("Could not save review. Check the console.");
       return;
     }
 
-    const inserted: Review = {
-      id: data.id,
-      album: data.album,
-      artist: data.artist,
-      coverUrl: data.cover_url,
-      date: data.listened_on,
-      rating: data.rating,
-      review: data.review_text,
+    const newReviewCard: Review = {
+      id: inserted.id,
+      album: inserted.title,
+      artist: inserted.artist,
+      coverUrl: inserted.image_url,
+      date: inserted.date_logged,
+      rating: inserted.rating,
+      review: inserted.review_text,
     };
 
-    setReviews([inserted, ...reviews]);
+    setReviews([newReviewCard, ...reviews]);
   }
 
   async function deleteReview(id: number) {
@@ -107,7 +106,11 @@ export default function Music() {
       <h1>Music reviews</h1>
       {!isAuthLoading && user && (
         <Window title="Add a Review" className="w-[50%]">
-          <ReviewForm onAddReview={addReview} />
+          <ReviewForm
+            search={searchItunes}
+            searchPlaceholder="Search for an album..."
+            onAddReview={addReview}
+          />
         </Window>
       )}
       <section className="flex flex-wrap justify-between container mt-8">
@@ -116,16 +119,16 @@ export default function Music() {
         ) : reviews.length === 0 ? (
           <p>No reviews yet. Add one above!</p>
         ) : (
-          reviews.map((r, index) => (
-            <Window className="mb-5 w-[49%]" key={index}>
+          reviews.map((r) => (
+            <Window className="mb-5 w-[49%]" key={r.id}>
               <ReviewCard
                 id={r.id}
-                album={r.album}
+                title={r.album}
                 artist={r.artist}
                 date={r.date}
                 rating={r.rating}
                 review={r.review}
-                coverUrl={r.coverUrl}
+                imageUrl={r.coverUrl}
                 onDelete={user ? deleteReview : undefined}
               />
             </Window>

@@ -1,20 +1,20 @@
 import { getItunesArtwork } from "@/lib/itunes";
 
 type ReviewCardProps = {
-  id: number,
-  album: string;
-  artist: string;
+  id: number;
+  title: string;
+  artist?: string;
+  imageUrl: string;
   date: string;
   rating: number;
   review: string;
-  coverUrl: string;
   onDelete?: (id: number) => void;
 };
 
-export default function ReviewCard({ id, album, artist, date, rating, review, coverUrl, onDelete }: ReviewCardProps) {
+export default function ReviewCard({ id, title, artist, date, rating, review, imageUrl, onDelete }: ReviewCardProps) {
   function handleDelete() {
     if (!onDelete) return;
-    const confirmed = confirm(`Delete your review of "${album}"?`);
+    const confirmed = confirm(`Delete your review of "${title}"?`);
     if (confirmed) {
       onDelete(id);
     }
@@ -22,9 +22,9 @@ export default function ReviewCard({ id, album, artist, date, rating, review, co
 
   return (
     <article className="flex gap-4 relative">
-      <img src={getItunesArtwork(coverUrl, 600)} alt={`${album} cover`} width={200} height={200} />
+      <img src={getItunesArtwork(imageUrl, 600)} alt={`${imageUrl} cover`} width={200} height={200} />
       <div>
-        <h3>{album}</h3>
+        <h3>{title}</h3>
         <p>{artist}</p>
         <p>Listened on: {date}</p>
         <p>
