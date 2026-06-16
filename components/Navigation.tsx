@@ -19,6 +19,7 @@ export default function Navigation() {
       <Link href="/" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Home</Link>
       <Link href="/cv" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Resume</Link>
       <Link href="/research" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Research</Link>
+      <Link href="/research" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Projects</Link>
       <Link href="/music" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Music</Link>
       <Link href="/movies" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Movies</Link>
       <Link href="/tv-shows" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">TV Shows</Link>
