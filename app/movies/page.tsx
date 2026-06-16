@@ -11,6 +11,7 @@ import { searchMoviesTmdb } from "@/lib/media/searchTmdb";
 type Review = {
   id: number;
   title: string;
+  releaseDate?: string;
   date: string;
   rating: number;
   review: string;
@@ -39,6 +40,7 @@ export default function Movies() {
       const mapped: Review[] = data.map((row) => ({
         id: row.id,
         title: row.title,
+        releaseDate: row.artist,
         coverUrl: row.image_url,
         date: row.date_logged,
         rating: row.rating,
@@ -57,6 +59,7 @@ export default function Movies() {
       .from("reviews")
       .insert({
         title: data.item.title,
+        artist: data.item.artist,
         image_url: data.item.imageUrl,
         date_logged: data.date,
         rating: data.rating,
@@ -74,6 +77,7 @@ export default function Movies() {
     const newReviewCard: Review = {
       id: inserted.id,
       title: inserted.title,
+      releaseDate: inserted.artist,
       coverUrl: inserted.image_url,
       date: inserted.date_logged,
       rating: inserted.rating,
@@ -121,6 +125,7 @@ export default function Movies() {
               <ReviewCard
                 id={r.id}
                 title={r.title}
+                artist={r.releaseDate}
                 date={r.date}
                 rating={r.rating}
                 review={r.review}
