@@ -21,7 +21,7 @@ type ReviewFormProps = {
 
 export default function ReviewForm({ search, searchPlaceholder, onAddReview }: ReviewFormProps) {
   const [selectedItem, setSelectedItem] = useState<MediaSearchResult | null>(null);
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
@@ -40,7 +40,7 @@ export default function ReviewForm({ search, searchPlaceholder, onAddReview }: R
     onAddReview({ item: selectedItem, date, rating, review });
 
     setSelectedItem(null);
-    setDate("");
+    setDate(new Date().toISOString().slice(0, 10));
     setRating(0);
     setReview("");
   }
