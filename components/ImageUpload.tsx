@@ -8,9 +8,10 @@ type ImageUploadProps = {
   value: string;
   onChange: (url: string) => void;
   bucket: string;
+  hint?: string;
 };
 
-export default function ImageUpload({ value, onChange, bucket }: ImageUploadProps) {
+export default function ImageUpload({ value, onChange, bucket, hint }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +67,7 @@ export default function ImageUpload({ value, onChange, bucket }: ImageUploadProp
           >
             {isUploading ? "Uploading..." : "Upload Image"}
           </Button>
-          <small className="ml-[2px]">Not required</small>
+          {hint && <small className="ml-[2px]">{hint}</small>}
         </div>
       )}
     </div>
