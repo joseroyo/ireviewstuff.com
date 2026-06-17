@@ -18,6 +18,8 @@ type ReviewCardProps = {
 export default function ReviewCard({ id, title, artist, date, rating, review, imageUrl, onDelete, onUpdate }: ReviewCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(review);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isLongReview = review.length > 280;
 
   function handleDelete() {
     if (!onDelete) return;
@@ -73,7 +75,14 @@ export default function ReviewCard({ id, title, artist, date, rating, review, im
             </article>
           </div>
         ) : (
-          <p>{review}</p>
+          <p className={!isExpanded && isLongReview ? "line-clamp-5" : ""}>
+            {review}
+          </p>
+        )}
+        {isLongReview && !isEditing && (
+          <button type="button" onClick={() => setIsExpanded(!isExpanded)} className="text-pink-strong underline">
+            {isExpanded ? "Read less" : "Read more"}
+          </button>
         )}
       </div>
       {onDelete && (
