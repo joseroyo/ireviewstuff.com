@@ -18,7 +18,7 @@ export default function Button({
   const base = "px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer";
   const variants = {
     primary: "bg-primary font-bold text-secondary hover:bg-btn-primary-hover",
-    secondary: "bg-white border-1 text-black hover:bg-gray-100",
+    secondary: "bg-lowlight border-1 text-primary hover:bg-gray-100",
   };
 
   return (
