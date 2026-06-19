@@ -6,6 +6,7 @@ import FriendCard from "@/components/FriendCard";
 import FriendForm, { FriendSubmission } from "@/components/FriendForm";
 import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
+import BackgroundMusic from "@/components/BackgroundMusic";
 
 type Friend = {
   id: number;
@@ -103,6 +104,7 @@ export default function FriendRating() {
 
   return (
     <main className="px-5 container mx-auto flex flex-col items-center">
+      <BackgroundMusic pageKey="friends" />
       <h1>Friend Ratings</h1>
 
       {!isAuthLoading && user && (

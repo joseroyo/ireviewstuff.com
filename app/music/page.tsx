@@ -7,6 +7,7 @@ import ReviewForm, { ReviewSubmission } from "@/components/ReviewForm";
 import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
 import { searchItunes } from "@/lib/media/searchItunes";
+import BackgroundMusic from "@/components/BackgroundMusic";
 
 type Review = {
   id: number;
@@ -118,6 +119,7 @@ export default function Music() {
 
   return (
     <main className="px-5 container mx-auto flex flex-col items-center">
+      <BackgroundMusic pageKey="music" />
       <h1>Music reviews</h1>
       {!isAuthLoading && user && (
         <Window title="Add a Review" className="w-[50%]">

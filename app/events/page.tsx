@@ -6,6 +6,7 @@ import EventCard from "@/components/EventCard";
 import EventForm, { EventSubmission } from "@/components/EventForm";
 import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
+import BackgroundMusic from "@/components/BackgroundMusic";
 
 type lifeEventType = {
   id: number;
@@ -107,6 +108,7 @@ export default function EventRating() {
 
   return (
     <main className="px-5 container mx-auto flex flex-col items-center">
+      <BackgroundMusic pageKey="events" />
       <h1>Life Events</h1>
 
       {!isAuthLoading && user && (
