@@ -1,16 +1,15 @@
 import Window from "@/components/Window";
+import BackgroundMusic from "@/components/BackgroundMusic";
 
 export default function Home() {
   return (
-    <Window title="Work in progress" className="w-[50%] self-center mt-20">
-      <h2>Hello!</h2>
-      <p>Welcome to my new webpage!!!</p>
-      <p>It's still a work in progress, but soon you'll be able to see:</p>
-      <ol>
-        <li><span>- My professional and personal projects</span></li>
-        <li><span>- My resume</span></li>
-        <li><span>- My music, movie and TV show reviews (Operational!)</span></li>
-      </ol>
-    </Window>
+    <main className="px-5 container mx-auto flex flex-col items-center">
+      <BackgroundMusic pageKey="Home" />
+      <h1 className="text-[60px]">I REVIEW STUFF!!!</h1>
+      <Window title="By Paul (ina) Cortes!" className="w-[50%] self-center mt-5">
+        <h2>Hello!</h2>
+        <p>Click on the tabs to see some of my reviews!</p>
+      </Window>
+    </main>
   );
 }
