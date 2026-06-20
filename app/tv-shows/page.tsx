@@ -8,6 +8,7 @@ import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
 import { searchSeriesTmdb } from "@/lib/media/searchTmdb";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import { notifySubscribers } from "@/lib/notify";
 
 type Review = {
   id: number;
@@ -86,6 +87,12 @@ export default function Movies() {
     };
 
     setReviews([newReviewCard, ...reviews]);
+
+    notifySubscribers(
+      data.item.title,
+      "TV show review",
+      `${window.location.origin}/tv-shows`
+    );
   }
 
   async function deleteReview(id: number) {

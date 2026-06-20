@@ -8,6 +8,7 @@ import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
 import { searchItunes } from "@/lib/media/searchItunes";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import { notifySubscribers } from "@/lib/notify";
 
 type Review = {
   id: number;
@@ -86,6 +87,12 @@ export default function Music() {
     };
 
     setReviews([newReviewCard, ...reviews]);
+
+    notifySubscribers(
+      data.item.title,
+      "music review",
+      `${window.location.origin}/music`
+    );
   }
 
   async function deleteReview(id: number) {

@@ -7,6 +7,7 @@ import FriendForm, { FriendSubmission } from "@/components/FriendForm";
 import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import { notifySubscribers } from "@/lib/notify";
 
 type Friend = {
   id: number;
@@ -74,6 +75,12 @@ export default function FriendRating() {
     };
 
     setFriends([newFriendCard, ...friends]);
+
+    notifySubscribers(
+      data.name,
+      "friend rating",
+      `${window.location.origin}/friends`
+    );
   }
 
   async function deleteFriend(id: number) {

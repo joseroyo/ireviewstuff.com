@@ -7,6 +7,7 @@ import EventForm, { EventSubmission } from "@/components/EventForm";
 import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import { notifySubscribers } from "@/lib/notify";
 
 type lifeEventType = {
   id: number;
@@ -78,6 +79,12 @@ export default function EventRating() {
     };
 
     setLifeEvents([newLifeEventCard, ...lifeEvents]);
+
+    notifySubscribers(
+      data.lifeEvent,
+      "life event",
+      `${window.location.origin}/events`
+    );
   }
 
   async function deleteLifeEvent(id: number) {
