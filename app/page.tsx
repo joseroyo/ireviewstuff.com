@@ -1,5 +1,6 @@
 import Window from "@/components/Window";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Home() {
   return (
@@ -9,6 +10,9 @@ export default function Home() {
       <Window title="By Paul (ina) Cortes!" className="w-[50%] self-center mt-5">
         <h2>Hello!</h2>
         <p>Click on the tabs to see some of my reviews or more about me!</p>
+      </Window>
+      <Window title="Newsletter!" className="w-[50%] self-center mt-5">
+        <NewsletterForm />
       </Window>
     </main>
   );
