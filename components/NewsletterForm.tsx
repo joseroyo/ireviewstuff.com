@@ -54,6 +54,7 @@ export default function NewsletterForm() {
       <Button type="submit" disabled={status === "loading"}>
         {status === "loading" ? "Subscribing..." : "Subscribe"}
       </Button>
+      <p className="text-[13px] text-center">Pro tip: Check your spam folder if you don't get your emails</p>
     </form>
   );
 }
