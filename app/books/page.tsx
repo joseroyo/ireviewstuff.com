@@ -141,7 +141,7 @@ export default function Books() {
         {isLoading ? (
           <p className="my-0 mx-[auto]">Loading reviews...</p>
         ) : reviews.length === 0 ? (
-          <h2 className="my-0 mx-[auto]">No reviews yet.</h2>
+          <h2 className="my-0 mx-[auto]">No reviews yet</h2>
         ) : (
           reviews.map((r) => (
             <Window className="mb-5 w-[100%] md:w-[49%]" key={r.id}>
