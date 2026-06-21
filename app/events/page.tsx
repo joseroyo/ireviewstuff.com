@@ -8,6 +8,7 @@ import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import { notifySubscribers } from "@/lib/notify";
+import Pagination from "@/components/Pagination";
 
 type lifeEventType = {
   id: number;
@@ -18,9 +19,12 @@ type lifeEventType = {
   photoUrl: string;
 };
 
+const PAGE_SIZE = 6;
+
 export default function EventRating() {
   const [lifeEvents, setLifeEvents] = useState<lifeEventType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const { user, isAuthLoading } = useAuth();
 
   useEffect(() => {
@@ -50,6 +54,16 @@ export default function EventRating() {
     }
     loadLifeEvents();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [lifeEvents.length]);
+
+  const totalPages = Math.ceil(lifeEvents.length / PAGE_SIZE);
+  const paginatedLifeEvents = lifeEvents.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
 
   async function addLifeEvent(data: EventSubmission) {
     const { data: inserted, error } = await supabase
@@ -119,7 +133,7 @@ export default function EventRating() {
       <h1>Life Events</h1>
 
       {!isAuthLoading && user && (
-        <Window title="Add a Life Event" className="w-[50%]">
+        <Window title="Add a Life Event" className="max-w-[748px] w-[100%] mb-4 lg:mb-0">
           <EventForm onAddDescription={addLifeEvent} />
         </Window>
       )}
@@ -130,7 +144,7 @@ export default function EventRating() {
         ) : lifeEvents.length === 0 ? (
           <h2 className="mx-[auto] my-0">No life events logged yet.</h2>
         ) : (
-          lifeEvents.map((f) => (
+          paginatedLifeEvents.map((f) => (
             <Window className="mb-5 w-[100%] md:w-[49%]" key={f.id}>
               <EventCard
                 id={f.id}
@@ -146,6 +160,11 @@ export default function EventRating() {
           ))
         )}
       </section>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </main>
   );
 }

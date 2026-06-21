@@ -100,7 +100,7 @@ export default function AboutMe() {
       <h1>About Me!</h1>
 
       {!isAuthLoading && user && (
-        <Window title="Add a Post!" className="max-w-[748px] w-[100%]">
+        <Window title="Add a Post!" className="max-w-[748px] w-[100%] mb-4 lg:mb-0">
           <BlogForm onAddBlog={addBlog} />
         </Window>
       )}

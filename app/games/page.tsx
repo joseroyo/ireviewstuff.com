@@ -9,6 +9,7 @@ import Window from "@/components/Window";
 import { searchRawg } from "@/lib/media/searchRawg";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import { notifySubscribers } from "@/lib/notify";
+import Pagination from "@/components/Pagination";
 
 type Review = {
   id: number;
@@ -20,9 +21,12 @@ type Review = {
   coverUrl: string;
 };
 
+const PAGE_SIZE = 6;
+
 export default function Games() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const { user, isAuthLoading } = useAuth();
 
   useEffect(() => {
@@ -55,6 +59,16 @@ export default function Games() {
 
     loadReviews();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [reviews.length]);
+
+  const totalPages = Math.ceil(reviews.length / PAGE_SIZE);
+  const paginatedReviews = reviews.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
 
   async function addReview(data: ReviewSubmission) {
     const { data: inserted, error } = await supabase
@@ -125,11 +139,11 @@ export default function Games() {
   }
 
   return (
-    <main className="px-5 mx-auto flex flex-col items-center w-[100%] 2xl:container">
+    <main className="px-5 mx-auto mb-[35px] flex flex-col items-center w-[100%] 2xl:container">
       <BackgroundMusic pageKey="games" />
       <h1>Videogame reviews</h1>
       {!isAuthLoading && user && (
-        <Window title="Add a Review" className="w-[50%]">
+        <Window title="Add a Review" className="max-w-[748px] w-[100%] mb-4 lg:mb-0">
           <ReviewForm
             search={searchRawg}
             searchPlaceholder="Search for a videogame..."
@@ -143,7 +157,7 @@ export default function Games() {
         ) : reviews.length === 0 ? (
           <h2 className="my-0 mx-[auto]">No reviews yet</h2>
         ) : (
-          reviews.map((r) => (
+          paginatedReviews.map((r) => (
             <Window className="mb-5 w-[100%] md:w-[49%]" key={r.id}>
               <ReviewCard
                 id={r.id}
@@ -160,6 +174,11 @@ export default function Games() {
           ))
         )}
       </section>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </main>
   );
 }

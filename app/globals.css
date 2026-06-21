@@ -36,6 +36,7 @@
 
 body {
   background-image: url("/images/windows-xp-bliss.jpg");
+  background-position-y: 54px;
   color: var(--pink-extra-strong);
   font-family: var(--font-undefined), monospace;
   cursor: url("/images/mouse-pointer.png") 0 0, auto;

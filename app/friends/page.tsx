@@ -8,6 +8,7 @@ import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import { notifySubscribers } from "@/lib/notify";
+import Pagination from "@/components/Pagination";
 
 type Friend = {
   id: number;
@@ -17,9 +18,12 @@ type Friend = {
   photoUrl: string;
 };
 
+const PAGE_SIZE = 6;
+
 export default function FriendRating() {
   const [friends, setFriends] = useState<Friend[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const { user, isAuthLoading } = useAuth();
 
   useEffect(() => {
@@ -48,6 +52,16 @@ export default function FriendRating() {
     }
     loadFriends();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [friends.length]);
+
+  const totalPages = Math.ceil(friends.length / PAGE_SIZE);
+  const paginatedFriends = friends.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
 
   async function addFriend(data: FriendSubmission) {
     const { data: inserted, error } = await supabase
@@ -115,7 +129,7 @@ export default function FriendRating() {
       <h1>Friends Reviews</h1>
 
       {!isAuthLoading && user && (
-        <Window title="Add a Friend Rating" className="w-[50%]">
+        <Window title="Add a Friend Rating" className="max-w-[748px] w-[100%] mb-4 lg:mb-0">
           <FriendForm onAddReview={addFriend} />
         </Window>
       )}
@@ -126,7 +140,7 @@ export default function FriendRating() {
         ) : friends.length === 0 ? (
           <h2 className="mx-[auto] my-0">No friends rated yet.</h2>
         ) : (
-          friends.map((f) => (
+          paginatedFriends.map((f) => (
             <Window className="mb-5 w-[100%] md:w-[49%]" key={f.id}>
               <FriendCard
                 id={f.id}
@@ -141,6 +155,11 @@ export default function FriendRating() {
           ))
         )}
       </section>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </main>
   );
 }
