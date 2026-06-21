@@ -44,9 +44,9 @@ export default function FriendForm({ onAddReview }: FriendFormProps) {
 
   return (
     <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
-      <section className="flex gap-5 justify-between">
+      <section className="flex gap-5 justify-between flex-col sm:flex-row">
         <ImageUpload value={photo} onChange={setPhoto} bucket="site-photos" hint="Not Required"/>
-        <section className="flex flex-col w-[50%]">
+        <section className="flex flex-col w-[100%] sm:w-[50%]">
           <input
             type="text"
             value={name}
