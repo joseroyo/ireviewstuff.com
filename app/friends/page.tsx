@@ -112,7 +112,7 @@ export default function FriendRating() {
   return (
     <main className="px-5 mx-auto flex flex-col items-center w-[100%] 2xl:container">
       <BackgroundMusic pageKey="friends" />
-      <h1>Friend Ratings</h1>
+      <h1>Friends Reviews</h1>
 
       {!isAuthLoading && user && (
         <Window title="Add a Friend Rating" className="w-[50%]">
