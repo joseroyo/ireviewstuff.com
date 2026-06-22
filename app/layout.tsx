@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import { AuthProvider } from "@/components/AuthProvider";
 import localFont from "next/font/local";
 import MouseSpark from "@/components/MouseSpark";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Paul (ina)'s Page",
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Navigation />
           {children}
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );
