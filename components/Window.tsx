@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, ReactNode } from "react";
-import Draggable from "react-draggable";
+import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 type WindowProps = {
   title?: string;
@@ -9,6 +9,8 @@ type WindowProps = {
   onClose?: () => void;
   className?: string;
   draggable?: boolean;
+  position?: { x: number; y: number };
+  onPositionChange?: (pos: { x: number; y: number }) => void;
 };
 
 type WindowButtonProps = {
@@ -30,9 +32,13 @@ function WindowButton({ label, symbol, onClick }: WindowButtonProps) {
     );
 }
 
-export default function Window({ title, children, onClose, className="", draggable = false }: WindowProps) {
+export default function Window({ title, children, onClose, className="", draggable = false, position = { x: 0, y: 0 }, onPositionChange, }: WindowProps) {
     const base = "border-3 border-window-border-color rounded-md shadow-lg overflow-hidden bg-window-bg h-fit";
     const nodeRef = useRef<HTMLDivElement>(null);
+
+    function handleStop(_: DraggableEvent, data: DraggableData) {
+        onPositionChange?.({ x: data.x, y: data.y });
+    }
 
     const windowCont = (
         <div className={`${base} ${className}`} ref={nodeRef}>
@@ -53,7 +59,7 @@ export default function Window({ title, children, onClose, className="", draggab
     if (!draggable) return windowCont;
 
     return (
-    <Draggable handle=".window-titlebar" nodeRef={nodeRef}>
+    <Draggable handle=".window-titlebar" nodeRef={nodeRef} position={position} onStop={handleStop}>
         {windowCont}
     </Draggable>
   );
