@@ -7,6 +7,7 @@ import BlogForm, { BlogSubmission } from "@/components/BlogForm";
 import { useAuth } from "@/components/AuthProvider";
 import Window from "@/components/Window";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import { useMediaQuery } from "@/lib/utils"
 
 type BlogType = {
   id: number;
@@ -20,6 +21,8 @@ export default function AboutMe() {
   const [Blogs, setBlogs] = useState<BlogType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, isAuthLoading } = useAuth();
+
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   useEffect(() => {
     async function loadBlogs() {
@@ -141,7 +144,7 @@ export default function AboutMe() {
           <h2 className="mx-[auto] my-0">No posts yet.</h2>
         ) : (
           Blogs.map((f) => (
-            <Window className="mb-5 w-[100%] lg:w-[49%]" key={f.id} draggable position={{ x: f.positionX, y: f.positionY }} onPositionChange={(pos) => handlePositionChange(f.id, pos)}>
+            <Window className="mb-5 w-[100%] lg:w-[49%]" key={f.id} draggable position={isDesktop ? { x: f.positionX, y: f.positionY } : { x: 0, y: 0 }} onPositionChange={(pos) => handlePositionChange(f.id, pos)}>
               <BlogCard
                 id={f.id}
                 title={f.title}
