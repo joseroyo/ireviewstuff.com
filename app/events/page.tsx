@@ -19,7 +19,7 @@ type lifeEventType = {
   photoUrl: string;
 };
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 4;
 
 export default function EventRating() {
   const [lifeEvents, setLifeEvents] = useState<lifeEventType[]>([]);

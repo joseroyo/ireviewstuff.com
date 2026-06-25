@@ -31,7 +31,6 @@ export default function Login() {
       return;
     }
 
-    // Logged in successfully — send them to the music page
     router.push("/");
   }
 

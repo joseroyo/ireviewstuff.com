@@ -12,7 +12,7 @@ import StarRating from "@/components/StarRating";
 
 type SearchResult = { type: "review"; data: any; mediaType: string } | { type: "friend"; data: any } | { type: "event"; data: any };
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 4;
 
 export default function Search() {
   const [query, setQuery] = useState("");

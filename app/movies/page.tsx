@@ -21,7 +21,7 @@ type Review = {
   coverUrl: string;
 };
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 4;
 
 export default function Movies() {
   const [reviews, setReviews] = useState<Review[]>([]);

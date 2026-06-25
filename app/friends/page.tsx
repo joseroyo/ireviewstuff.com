@@ -18,7 +18,7 @@ type Friend = {
   photoUrl: string;
 };
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 4;
 
 export default function FriendRating() {
   const [friends, setFriends] = useState<Friend[]>([]);
