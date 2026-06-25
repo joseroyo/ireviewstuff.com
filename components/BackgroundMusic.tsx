@@ -122,6 +122,7 @@ export default function BackgroundMusic({ pageKey }: BackgroundMusicProps) {
           <audio
             ref={audioRef}
             src={audioUrl}
+            preload="none"
             loop
             onLoadedMetadata={() => {
                 if (audioRef.current) audioRef.current.volume = 0.3;

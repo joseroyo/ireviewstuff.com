@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import Button from "./Button";
+import imageCompression from "browser-image-compression";
 
 type ImageUploadProps = {
   value: string;
@@ -24,7 +25,13 @@ export default function ImageUpload({ value, onChange, bucket, hint }: ImageUplo
     const ext = file.name.split(".").pop();
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-    const { error } = await supabase.storage.from(bucket).upload(filename, file);
+    const compressed = await imageCompression(file, {
+      maxSizeMB: 0.5,        
+      maxWidthOrHeight: 1000,
+    });
+
+
+    const { error } = await supabase.storage.from(bucket).upload(filename, compressed);
 
     if (error) {
       console.error("Upload failed:", error.message, error);
