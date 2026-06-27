@@ -90,3 +90,28 @@ textarea {
 a, button, [role="button"] {
   cursor: url("/images/mouse-pointer.png") 0 0, pointer;
 }
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.animate-pop {
+  animation: pop 0.4s ease-out;
+}
+
+@keyframes sparkle-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3);
+  }
+}
+
+.animate-sparkle-burst {
+  animation: sparkle-burst 1s ease-out forwards;
+}

@@ -28,6 +28,7 @@ export default function Navigation() {
       <Link href="/games" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Games</Link>
       <Link href="/events" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Life Events</Link>
       <Link href="/friends" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Friends</Link>
+      <Link href="/review-me" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Review Me</Link>
       <Link href="/search" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Search</Link>
       {isAuthLoading ? (
         <span>...</span>
