@@ -6,6 +6,8 @@ import StarDisplay from "@/components/StarDisplay";
 import Button from "@/components/Button";
 import Window from "@/components/Window";
 import SparkleBurst from "@/components/SparkleBurst";
+import BackgroundMusic from "@/components/BackgroundMusic";
+
 
 const LOCKED_RATING = 5;
 const LOCKED_TEXT = "BEST PERSON EVER!!";
@@ -53,6 +55,7 @@ export default function ReviewMe() {
 
   return (
     <main className="px-5 mx-auto flex flex-col items-center w-[100%] 2xl:container">
+      <BackgroundMusic pageKey="review-me" />
       <h1>Review Me</h1>
       <div ref={windowRef} className={`max-w-[600px] w-full ${isAnimating ? "animate-pop" : ""}`}>
           <Window title="Review Me!" className="w-[100%]">
