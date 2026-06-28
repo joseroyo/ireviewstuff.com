@@ -143,7 +143,7 @@ export default function Games() {
       <BackgroundMusic pageKey="games" />
       <h1>Videogame reviews</h1>
       {!isAuthLoading && user && (
-        <Window title="Add a Review" className="max-w-[748px] w-[100%] mb-4 lg:mb-0">
+        <Window title="Add a Review" className="max-w-[748px] w-[100%] mb-4 lg:mb-8">
           <ReviewForm
             search={searchRawg}
             searchPlaceholder="Search for a videogame..."
@@ -151,7 +151,7 @@ export default function Games() {
           />
         </Window>
       )}
-      <section className="flex flex-wrap justify-between lg:mt-8 w-[100%] 2xl:container">
+      <section className="flex flex-wrap justify-between w-[100%] 2xl:container">
         {isLoading ? (
           <p className="my-0 mx-[auto]">Loading reviews...</p>
         ) : reviews.length === 0 ? (

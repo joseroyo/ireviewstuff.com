@@ -129,12 +129,12 @@ export default function FriendRating() {
       <h1>Friends Reviews</h1>
 
       {!isAuthLoading && user && (
-        <Window title="Add a Friend Rating" className="max-w-[748px] w-[100%] mb-4 lg:mb-0">
+        <Window title="Add a Friend Rating" className="max-w-[748px] w-[100%] mb-4 lg:mb-8">
           <FriendForm onAddReview={addFriend} />
         </Window>
       )}
 
-      <section className="flex flex-wrap justify-between lg:mt-8 w-[100%] 2xl:container">
+      <section className="flex flex-wrap justify-between w-[100%] 2xl:container">
         {isLoading ? (
           <p className="mx-[auto] my-0">Loading...</p>
         ) : friends.length === 0 ? (

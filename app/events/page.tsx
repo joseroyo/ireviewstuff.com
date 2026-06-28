@@ -133,12 +133,12 @@ export default function EventRating() {
       <h1>Life Events</h1>
 
       {!isAuthLoading && user && (
-        <Window title="Add a Life Event" className="max-w-[748px] w-[100%] mb-4 lg:mb-0">
+        <Window title="Add a Life Event" className="max-w-[748px] w-[100%] mb-4 lg:mb-8">
           <EventForm onAddDescription={addLifeEvent} />
         </Window>
       )}
 
-      <section className="flex flex-wrap justify-between lg:mt-8 w-[100%] 2xl:container">
+      <section className="flex flex-wrap justify-between w-[100%] 2xl:container">
         {isLoading ? (
           <p className="mx-[auto] my-0">Loading...</p>
         ) : lifeEvents.length === 0 ? (
