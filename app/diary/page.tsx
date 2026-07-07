@@ -7,7 +7,7 @@ export default function Diary() {
       <p>Welcome to my new webpage!!!</p>
       <p>It's still a work in progress, but soon you'll be able to see:</p>
       <ol>
-        <li><span>- My resume</span></li>
+        <li><span>- My Diary</span></li>
       </ol>
     </Window>
   );
