@@ -18,7 +18,7 @@ type EventFormProps = {
   onAddDescription: (data: EventSubmission) => void;
 };
 
-export default function FriendForm({ onAddDescription }: EventFormProps) {
+export default function EventForm({ onAddDescription }: EventFormProps) {
   const [lifeEvent, setLifeEvent] = useState("");
   const [date, setDate] = useState(todayLocal());
   const [rating, setRating] = useState(0);
