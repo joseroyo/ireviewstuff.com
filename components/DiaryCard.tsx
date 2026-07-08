@@ -3,36 +3,35 @@
 import { useState } from "react";
 import StarRating from "./StarRating";
 import StarDisplay from "./StarDisplay";
-import Comments from "./Comments";
 
-type EventCardProps = {
+type DiaryCardProps = {
   id: number;
-  lifeEvent: string;
+  title: string;
   date: string;
   rating: number;
-  description: string;
-  photoUrl: string;
+  text: string;
+  photo: string;
   onDelete?: (id: number) => void;
   onUpdate?: (id: number, newDescription: string, newRating: number) => void;
 };
 
-export default function EventCard({ id, lifeEvent, date, rating, description, photoUrl, onDelete, onUpdate }: EventCardProps) {
+export default function DiaryCard({ id, title, date, rating, text, photo, onDelete, onUpdate }: DiaryCardProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedText, setEditedText] = useState(description);
+  const [editedText, setEditedText] = useState(text);
   const [editedRating, setEditedRating] = useState(rating);
   const [isExpanded, setIsExpanded] = useState(false);
-  const isLongDesc = description.length > 280;
+  const isLongDesc = text.length > 280;
 
   function handleDelete() {
     if (!onDelete) return;
-    const confirmed = confirm(`Delete your review of "${lifeEvent}"?`);
+    const confirmed = confirm(`Delete your diary entry?`);
     if (confirmed) {
       onDelete(id);
     }
   }
 
   function handleSave() {
-    if ((editedText === description) && (editedRating === rating)) {
+    if ((editedText === text) && (editedRating === rating)) {
       setIsEditing(false);
       return;
     }
@@ -45,27 +44,26 @@ export default function EventCard({ id, lifeEvent, date, rating, description, ph
   }
 
   function handleCancel() {
-    setEditedText(description);
+    setEditedText(text);
     setEditedRating(rating);
     setIsEditing(false);
   }
 
   return (
-    <>
     <article className="flex gap-4 relative">
-      {photoUrl && (
-        <img src={photoUrl} alt={`${lifeEvent} photo big card`} className="hidden w-[200px] h-[100%] sm:block md:hidden lg:w-[150px] lg:block xl:w-[200px]" width={200} height={200} loading="lazy" />
+      {photo && (
+        <img src={photo} alt={`${title} photo big card`} className="hidden w-[200px] h-[100%] sm:block md:hidden lg:w-[150px] lg:block xl:w-[200px]" width={200} height={200} loading="lazy" />
       )}
       <div className="w-[100%]">
         {onUpdate && !isEditing && (
           <button type="button" onClick={() => setIsEditing(true)} className="absolute right-0 bottom-[-5px] text-primary hover:underline">Edit</button>
         )}
         <div className="flex">
-          {photoUrl && (
-            <img src={photoUrl} alt={`${lifeEvent} photo small card`} className="w-[100px] h-[100%] mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
+          {photo && (
+            <img src={photo} alt={`${title} photo small card`} className="w-[100px] h-[100%] mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
           )}
           <div>
-            <h3>{lifeEvent}</h3>
+            <h3>{title}</h3>
             <p>Date: {date}</p>
             {isEditing ? (
               <div>
@@ -92,7 +90,7 @@ export default function EventCard({ id, lifeEvent, date, rating, description, ph
             </div>
           ) : (
             <p className={!isExpanded && isLongDesc ? "line-clamp-3 sm:line-clamp-5" : ""}>
-              {description}
+              {text}
             </p>
           )}
           {isLongDesc && !isEditing && (
@@ -106,7 +104,5 @@ export default function EventCard({ id, lifeEvent, date, rating, description, ph
         <button type="button" className="absolute right-[-23px] top-[-59px] border-0 px-4 py-2 cursor-pointer" onClick={handleDelete}>x</button>
       )}
     </article>
-    <Comments parentType="life_events" parentId={id} />
-    </>
   );
 }
