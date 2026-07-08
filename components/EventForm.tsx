@@ -50,7 +50,7 @@ export default function EventForm({ onAddDescription }: EventFormProps) {
     <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
       <section className="flex gap-5 justify-between flex-col sm:flex-row">
         <ImageUpload value={photoUrl} onChange={setPhotoUrl} bucket="site-photos" />
-        <section className="flex flex-col w-[100%] sm:w-[50%]">
+        <section className="flex flex-col w-[100%] sm:grow sm:w-[auto]">
           <input
             type="text"
             value={lifeEvent}
@@ -61,7 +61,7 @@ export default function EventForm({ onAddDescription }: EventFormProps) {
           <input
               type="date"
               value={date}
-              className="focus:outline-0"
+              className="focus:outline-0 mt-[8px] mb-[-10px]"
               onChange={(e) => setDate(e.target.value)}
             />
           <div>
@@ -71,10 +71,10 @@ export default function EventForm({ onAddDescription }: EventFormProps) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Write more details..."
-              rows={4}
+              rows={5}
               className="pr-2"
             />
-          <Button type="submit" className="mt-3">Save Life Event</Button>
+          <Button type="submit" className="mt-3">Save Entry</Button>
         </section>
       </section>
     </form>

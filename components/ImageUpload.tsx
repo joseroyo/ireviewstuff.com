@@ -48,7 +48,7 @@ export default function ImageUpload({ value, onChange, bucket, hint }: ImageUplo
   }
 
   return (
-    <div className="w-auto">
+    <div className="w-auto sm:max-w-[150px]">
       <input
         type="file"
         accept="image/*"

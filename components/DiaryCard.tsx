@@ -10,12 +10,12 @@ type DiaryCardProps = {
   date: string;
   rating: number;
   text: string;
-  photoUrl: string;
+  photo: string;
   onDelete?: (id: number) => void;
   onUpdate?: (id: number, newDescription: string, newRating: number) => void;
 };
 
-export default function DiaryCard({ id, title, date, rating, text, photoUrl, onDelete, onUpdate }: DiaryCardProps) {
+export default function DiaryCard({ id, title, date, rating, text, photo, onDelete, onUpdate }: DiaryCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
   const [editedRating, setEditedRating] = useState(rating);
@@ -51,16 +51,16 @@ export default function DiaryCard({ id, title, date, rating, text, photoUrl, onD
 
   return (
     <article className="flex gap-4 relative">
-      {photoUrl && (
-        <img src={photoUrl} alt={`${title} photo big card`} className="hidden w-[200px] h-[100%] sm:block md:hidden lg:w-[150px] lg:block xl:w-[200px]" width={200} height={200} loading="lazy" />
+      {photo && (
+        <img src={photo} alt={`${title} photo big card`} className="hidden w-[200px] h-[100%] sm:block md:hidden lg:w-[150px] lg:block xl:w-[200px]" width={200} height={200} loading="lazy" />
       )}
       <div className="w-[100%]">
         {onUpdate && !isEditing && (
           <button type="button" onClick={() => setIsEditing(true)} className="absolute right-0 bottom-[-5px] text-primary hover:underline">Edit</button>
         )}
         <div className="flex">
-          {photoUrl && (
-            <img src={photoUrl} alt={`${title} photo small card`} className="w-[100px] h-[100%] mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
+          {photo && (
+            <img src={photo} alt={`${title} photo small card`} className="w-[100px] h-[100%] mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
           )}
           <div>
             <h3>{title}</h3>
