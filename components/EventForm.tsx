@@ -29,7 +29,7 @@ export default function EventForm({ onAddDescription }: EventFormProps) {
     e.preventDefault();
 
     if (lifeEvent === "") {
-      alert("Please write the event's name/title");
+      alert("Please write the entry's name/title");
       return;
     }
 
@@ -55,7 +55,7 @@ export default function EventForm({ onAddDescription }: EventFormProps) {
             type="text"
             value={lifeEvent}
             onChange={(e) => setLifeEvent(e.target.value)}
-            placeholder="Add event..."
+            placeholder="Add entry..."
             className="w-[100%]"
           />
           <input

@@ -61,7 +61,9 @@ export default function EventCard({ id, lifeEvent, date, rating, description, ph
           <button type="button" onClick={() => setIsEditing(true)} className="absolute right-0 bottom-[-5px] text-primary hover:underline">Edit</button>
         )}
         <div className="flex">
-          <img src={photoUrl} alt={`${lifeEvent} photo small card`} className="w-[100px] h-[100%] mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
+          {photoUrl && (
+            <img src={photoUrl} alt={`${lifeEvent} photo small card`} className="w-[100px] h-[100%] mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
+          )}
           <div>
             <h3>{lifeEvent}</h3>
             <p>Date: {date}</p>
