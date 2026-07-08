@@ -140,7 +140,7 @@ function DiaryContent() {
               onClick={() => setShowPasswordChange(!showPasswordChange)}
               className="fixed bottom-16 right-4 flex gap-2 items-center z-10"
             >
-              {showPasswordChange ? "Hide password settings" : "Change diary password"}
+              {showPasswordChange ? "Hide password change" : "Change diary password"}
           </Button>
           {showPasswordChange && <DiaryPasswordChange />}
           <Window title="Add a Diary Entry" className="max-w-[748px] w-[100%] mb-4 lg:mb-8">
@@ -155,9 +155,9 @@ function DiaryContent() {
         <p>No posts yet.</p>
       ) : (
         <>
-          <section className="flex flex-wrap gap-4 mt-8 w-full">
+          <section className="flex flex-wrap justify-between w-[100%] 2xl:container">
             {paginatedEntries.map((p) => (
-              <Window key={p.id} className="w-[100%] md:w-[49%]">
+              <Window key={p.id} className="mb-5 w-[100%] md:w-[49%]">
                 <DiaryCard
                   id={p.id}
                   title={p.title}
