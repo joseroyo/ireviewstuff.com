@@ -106,12 +106,30 @@ function DiaryContent() {
   }
 
   async function deleteDiary(id: number) {
+    const entry = posts.find((p) => p.id === id);
+    if (!entry) return;
+
     const { error } = await supabase.from("diary").delete().eq("id", id);
 
     if (error) {
       console.error("Failed to delete:", error.message, error);
       alert("Could not delete.");
       return;
+    }
+
+    if (entry.photo) {
+      const filename = entry.photo.split("/").pop();
+      if (filename) {
+        const { data: { session } } = await supabase.auth.getSession();
+        await fetch("/api/delete-storage-file", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+          body: JSON.stringify({ bucket: "site-photos", filename }),
+        });
+      }
     }
 
     setPosts(posts.filter((f) => f.id !== id));

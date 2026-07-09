@@ -102,12 +102,30 @@ export default function EventRating() {
   }
 
   async function deleteLifeEvent(id: number) {
+    const entry = lifeEvents.find((f) => f.id === id);
+    if (!entry) return;
+
     const { error } = await supabase.from("life_events").delete().eq("id", id);
 
     if (error) {
       console.error("Failed to delete:", error.message, error);
       alert("Could not delete.");
       return;
+    }
+
+    if (entry.photoUrl) {
+      const filename = entry.photoUrl.split("/").pop();
+      if (filename) {
+        const { data: { session } } = await supabase.auth.getSession();
+        await fetch("/api/delete-storage-file", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+          body: JSON.stringify({ bucket: "site-photos", filename }),
+        });
+      }
     }
 
     setLifeEvents(lifeEvents.filter((f) => f.id !== id));
