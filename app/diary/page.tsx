@@ -11,6 +11,7 @@ import DiaryCard from "@/components/DiaryCard";
 import Pagination from "@/components/Pagination";
 import BackgroundMusic from "@/components/BackgroundMusic"; 
 import Button from "@/components/Button";
+import { redirect } from 'next/navigation';
 
 type DiaryPost = {
   id: number;
@@ -24,6 +25,8 @@ type DiaryPost = {
 const PAGE_SIZE = 4;
 
 export default function Diary() {
+  redirect('/404');
+
   return (
     <main className="px-5 mx-auto flex flex-col items-center w-[100%] 2xl:container">
       <BackgroundMusic pageKey="diary" />
