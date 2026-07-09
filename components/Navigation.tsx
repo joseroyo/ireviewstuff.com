@@ -5,11 +5,23 @@ import { useAuth } from "./AuthProvider";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRef, useEffect } from "react";
 
 export default function Navigation() {
   const { user, isAuthLoading } = useAuth();
   const router = useRouter();
   const [isWeebOpen, setIsWeebOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsWeebOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -25,7 +37,7 @@ export default function Navigation() {
       <Link href="/tv-shows" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">TV Shows</Link>
       <Link href="/books" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Books</Link>
       <Link href="/games" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Games</Link>
-      <div className="relative">
+      <div className="relative" ref={dropdownRef}>
         <button 
           className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px] cursor-pointer"
           type="button"
