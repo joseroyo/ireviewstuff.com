@@ -10,6 +10,7 @@ type Comment = {
   name: string;
   text: string;
   createdAt: string;
+  parentCommentId: number | null;
 };
 
 type CommentsProps = {
@@ -25,6 +26,9 @@ export default function Comments({ parentType, parentId }: CommentsProps) {
   const [name, setName] = useState("");
   const [text, setText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [replyingTo, setReplyingTo] = useState<number | null>(null);
+  const [replyText, setReplyText] = useState("");
+  const [isReplying, setIsReplying] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -55,6 +59,7 @@ export default function Comments({ parentType, parentId }: CommentsProps) {
           name: c.name,
           text: c.text,
           createdAt: c.created_at,
+          parentCommentId: c.parent_comment_id,
         })));
       }
       setIsLoading(false);
@@ -69,7 +74,7 @@ export default function Comments({ parentType, parentId }: CommentsProps) {
     setIsSubmitting(true);
     const { data, error } = await supabase
       .from("comments")
-      .insert({ parent_type: parentType, parent_id: parentId, name, text })
+      .insert({ parent_type: parentType, parent_id: parentId, name, text, parent_comment_id: null })
       .select()
       .single();
 
@@ -88,20 +93,62 @@ export default function Comments({ parentType, parentId }: CommentsProps) {
       name: data.name,
       text: data.text,
       createdAt: data.created_at,
+      parentCommentId: null,
     }]);
     setCount(count + 1);
     setName("");
     setText("");
   }
 
+  async function handleReplySubmit(parentCommentId: number) {
+    if (!replyText.trim() || !user) return;
+
+    setIsReplying(true);
+    const { data, error } = await supabase
+      .from("comments")
+      .insert({
+        parent_type: parentType,
+        parent_id: parentId,
+        parent_comment_id: parentCommentId,
+        name: "Paul",
+        text: replyText,
+      })
+      .select()
+      .single();
+
+    setIsReplying(false);
+    if (error || !data) return;
+
+    setComments([...comments, {
+      id: data.id,
+      name: data.name,
+      text: data.text,
+      createdAt: data.created_at,
+      parentCommentId: data.parent_comment_id,
+    }]);
+    setCount(count + 1);
+    setReplyText("");
+    setReplyingTo(null);
+  }
+
   async function handleDelete(id: number) {
     if (!confirm("Delete this comment?")) return;
     const { error } = await supabase.from("comments").delete().eq("id", id);
     if (!error) {
-      setComments(comments.filter((c) => c.id !== id));
-      setCount(count - 1);
+      const removed = comments.filter((c) => c.id === id || c.parentCommentId === id).length;
+      setComments(comments.filter((c) => c.id !== id && c.parentCommentId !== id));
+      setCount(count - removed);
     }
   }
+
+  const topLevel = comments.filter((c) => c.parentCommentId === null);
+  const repliesByParent = comments.reduce((acc, c) => {
+    if (c.parentCommentId !== null) {
+      if (!acc[c.parentCommentId]) acc[c.parentCommentId] = [];
+      acc[c.parentCommentId].push(c);
+    }
+    return acc;
+  }, {} as Record<number, Comment[]>);
 
   return (
     <div>
@@ -114,31 +161,91 @@ export default function Comments({ parentType, parentId }: CommentsProps) {
       </button>
 
       {isExpanded && (
-        <div className="mt-3">
+        <div className="mt-2">
           {isLoading && <p>Loading...</p>}
 
-          {!isLoading && comments.length === 0 && (
+          {!isLoading && topLevel.length === 0 && (
             <p>No comments yet, be the first!</p>
           )}
 
           <ul>
-            {comments.map((c) => (
-              <li key={c.id} className="mb-2">
-                <strong>{c.name}:</strong> {c.text}
-                {user && (
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(c.id)}
-                    className="ml-2 text-red-500"
-                  >
-                    ×
-                  </button>
+            {topLevel.map((c) => (
+              <li key={c.id} className="py-3 border-dotted border-b-1 first:border-t-1">
+                <div>
+                  <strong>{c.name}:</strong> {c.text}
+                  {user && (
+                    <>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(c.id)}
+                      className="ml-3 text-red-500 underline"
+                    >
+                      X
+                    </button>
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => setReplyingTo(replyingTo === c.id ? null : c.id)}
+                        className="text-pink-strong underline"
+                      >
+                        Reply
+                      </button>
+                    </div>
+                    </>
+                  )}
+                </div>
+
+                {repliesByParent[c.id]?.map((reply) => (
+                  <div key={reply.id} className="ml-6 mt-2">
+                    <strong>{reply.name}:</strong> {reply.text}
+                    {user && (
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(reply.id)}
+                        className="ml-3 text-red-500 underline"
+                      >
+                        X
+                      </button>
+                    )}
+                  </div>
+                ))}
+
+                {replyingTo === c.id && (
+                  <div className="ml-6 mt-2 flex flex-col gap-2">
+                    <textarea
+                      value={replyText}
+                      onChange={(e) => setReplyText(e.target.value)}
+                      placeholder="Your reply"
+                      maxLength={500}
+                      rows={2}
+                      required
+                    />
+                    <div className="flex gap-2">
+                      <Button
+                        type="button"
+                        onClick={() => handleReplySubmit(c.id)}
+                        disabled={isReplying}
+                      >
+                        {isReplying ? "Posting..." : "Post Reply"}
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => {
+                          setReplyingTo(null);
+                          setReplyText("");
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
                 )}
               </li>
             ))}
           </ul>
 
-          <form onSubmit={handleSubmit} className="mt-3 flex flex-col gap-2">
+          <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-2">
             <input
               type="text"
               value={name}
