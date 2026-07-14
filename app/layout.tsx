@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import { AuthProvider } from "@/components/AuthProvider";
 import localFont from "next/font/local";
 import MouseSpark from "@/components/MouseSpark";
+import AdBanner from "@/components/AdBanner";
 import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
+          <AdBanner />
           <MouseSpark />
           <Navigation />
           {children}
