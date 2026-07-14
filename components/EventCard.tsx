@@ -54,7 +54,7 @@ export default function EventCard({ id, lifeEvent, date, rating, description, ph
     <>
     <article className="flex gap-4 relative">
       {photoUrl && (
-        <img src={photoUrl} alt={`${lifeEvent} photo big card`} className="hidden w-[200px] h-[100%] sm:block md:hidden lg:w-[150px] lg:block xl:w-[200px]" width={200} height={200} loading="lazy" />
+        <img src={photoUrl} alt={`${lifeEvent} photo big card`} className="hidden w-[200px] h-[200px] aspect-square object-cover object-center sm:block md:hidden lg:w-[150px] lg:h-[150px] lg:block xl:w-[200px] xl:h-[200px]" width={200} height={200} loading="lazy" />
       )}
       <div className="w-[100%]">
         {onUpdate && !isEditing && (
@@ -62,7 +62,7 @@ export default function EventCard({ id, lifeEvent, date, rating, description, ph
         )}
         <div className="flex">
           {photoUrl && (
-            <img src={photoUrl} alt={`${lifeEvent} photo small card`} className="w-[100px] h-[100%] mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
+            <img src={photoUrl} alt={`${lifeEvent} photo small card`} className="w-[100px] h-[100px] aspect-square object-cover object-center mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
           )}
           <div>
             <h3>{lifeEvent}</h3>
