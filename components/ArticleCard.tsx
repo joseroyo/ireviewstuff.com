@@ -1,0 +1,117 @@
+"use client"
+
+import { useState } from "react";
+import StarRating from "./StarRating";
+import StarDisplay from "./StarDisplay";
+import Comments from "./Comments";
+
+type ArticleCardProps = {
+  id: number;
+  title: string;
+  date: string;
+  rating: number;
+  text: string;
+  previewUrl: string;
+  articleUrl: string;
+  onDelete?: (id: number) => void;
+  onUpdate?: (id: number, newDescription: string, newRating: number) => void;
+};
+
+export default function ArticleCard({ id, title, date, rating, text, previewUrl, articleUrl, onDelete, onUpdate }: ArticleCardProps) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(text);
+  const [editedRating, setEditedRating] = useState(rating);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isLongDesc = text.length > 280;
+
+  function handleDelete() {
+    if (!onDelete) return;
+    const confirmed = confirm(`Delete your review of "${title}"?`);
+    if (confirmed) {
+      onDelete(id);
+    }
+  }
+
+  function handleSave() {
+    if ((editedText === text) && (editedRating === rating)) {
+      setIsEditing(false);
+      return;
+    }
+
+    const confirmed = confirm("Ready to save these changes?");
+    if (!confirmed) return;
+
+    onUpdate?.(id, editedText, editedRating);
+    setIsEditing(false);
+  }
+
+  function handleCancel() {
+    setEditedText(text);
+    setEditedRating(rating);
+    setIsEditing(false);
+  }
+
+  return (
+    <>
+    <article className="flex gap-4 relative">
+      {previewUrl && (
+        <a href={articleUrl} target="_blank" rel="noopener noreferrer">
+          <img src={previewUrl} alt={`${title} photo big card`} className="hidden w-[200px] h-auto sm:block md:hidden lg:w-[150px] lg:block xl:w-[200px]" width={200} height={200} loading="lazy" />
+        </a>
+      )}
+      <div className="w-[100%]">
+        {onUpdate && !isEditing && (
+          <button type="button" onClick={() => setIsEditing(true)} className="absolute right-0 bottom-[-5px] text-primary hover:underline">Edit</button>
+        )}
+        <div className="flex">
+          {previewUrl && (
+            <a href={articleUrl} target="_blank" rel="noopener noreferrer">
+              <img src={previewUrl} alt={`${title} photo small card`} className="w-[100px] h-auto mr-4 sm:hidden md:block lg:hidden" width={100} height={100} loading="lazy" />
+            </a>
+          )}
+          <div>
+            <a href={articleUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{title}</a>
+            <p>Date: {date}</p>
+            {isEditing ? (
+              <div>
+                <StarRating value={editedRating} onChange={setEditedRating} />
+              </div>
+            ) : (
+              <StarDisplay value={rating} />
+            )}
+          </div>
+        </div>
+        <div className="mt-[10px] sm:mt-0 md:mt-[10px] lg:mt-0">
+          {isEditing ? (
+            <div className="flex flex-col mt-1">
+              <textarea
+                value={editedText}
+                onChange={(e) => setEditedText(e.target.value)}
+                rows={5}
+                className="pr-2"
+              />
+              <article className="flex justify-between mt-3">
+                <button type="button" onClick={handleCancel} className="hover:underline">Cancel</button>
+                <button type="button" onClick={handleSave} className="hover:underline">Save</button>
+              </article>
+            </div>
+          ) : (
+            <p className={!isExpanded && isLongDesc ? "line-clamp-3 sm:line-clamp-5" : ""}>
+              {text}
+            </p>
+          )}
+          {isLongDesc && !isEditing && (
+            <button type="button" onClick={() => setIsExpanded(!isExpanded)} className="text-pink-strong underline">
+              {isExpanded ? "Read less" : "Read more"}
+            </button>
+          )}
+        </div>
+      </div>
+      {onDelete && (
+        <button type="button" className="absolute right-[-23px] top-[-59px] border-0 px-4 py-2 cursor-pointer" onClick={handleDelete}>x</button>
+      )}
+    </article>
+    <Comments parentType="reviews" parentId={id} />
+    </>
+  );
+}

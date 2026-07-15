@@ -37,6 +37,7 @@ export default function Navigation() {
       <Link href="/tv-shows" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">TV Shows</Link>
       <Link href="/books" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Books</Link>
       <Link href="/games" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Games</Link>
+      <Link href="/articles" className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px]">Articles</Link>
       <div className="relative" ref={dropdownRef}>
         <button 
           className="font-bold text-[16px] px-[12px] pb-[2px] bg-window-bg border-1 rounded-[2px] cursor-pointer"
